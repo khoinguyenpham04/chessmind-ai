@@ -1,12 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { ChevronRight, Menu, X } from 'lucide-react'
+import { ChevronRight} from 'lucide-react'
 import Image from 'next/image'
 
 export function LandingPageComponent() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [gradientAngle, setGradientAngle] = useState(0)
 
   useEffect(() => {
@@ -77,21 +75,3 @@ export function LandingPageComponent() {
   )
 }
 
-function NavLink({ href, children, mobile = false }: { href: string, children: React.ReactNode, mobile?: boolean }) {
-  const baseClasses = "text-sm hover:text-green-400 transition-colors"
-  const mobileClasses = mobile ? "block py-2 px-4 text-center" : ""
-  
-  if (href.startsWith('#')) {
-    return (
-      <a href={href} className={`${baseClasses} ${mobileClasses}`}>
-        {children}
-      </a>
-    )
-  }
-  
-  return (
-    <Link href={href} className={`${baseClasses} ${mobileClasses}`}>
-      {children}
-    </Link>
-  )
-}

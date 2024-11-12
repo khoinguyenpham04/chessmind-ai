@@ -18,7 +18,7 @@ interface MoveAnalysisProps {
 export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps) {
   const [lastAnalyzedMove, setLastAnalyzedMove] = React.useState<string | null>(null);
   const [audioError, setAudioError] = React.useState<string | null>(null);
-  const { isPlaying, isPaused, playAudio, pauseAudio, stopAudio } = useTextToSpeech();
+  const { isPlaying, playAudio, stopAudio } = useTextToSpeech();
   
   const { complete, completion, isLoading } = useCompletion({
     api: '/api/chess-analysis',
@@ -67,9 +67,7 @@ export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps)
           <h3 className="text-xl font-semibold">Move Analysis</h3>
           <AudioControls
             isPlaying={isPlaying}
-            isPaused={isPaused}
             onPlay={handlePlayAnalysis}
-            onPause={pauseAudio}
             onStop={stopAudio}
             disabled={!completion || isLoading}
           />
