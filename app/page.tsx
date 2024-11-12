@@ -1,5 +1,5 @@
-import { ChessGameComponent } from "@/components/chess-game"
+import { LandingPageComponent } from "@/components/landing-page"
 
 export default function Page() {
-  return <ChessGameComponent />
+  return <LandingPageComponent />
 }
