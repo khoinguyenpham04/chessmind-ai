@@ -53,7 +53,7 @@ export function LandingPageComponent() {
             {/* Screen Content */}
             <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-gray-900">
               <Image
-                src="/images/screenshot.png?height=800&width=1200"
+                src="/images/screenshot3.png?height=800&width=1300"
                 alt="ChessMind AI Interface"
                 className="object-cover"
                 fill
@@ -71,7 +71,7 @@ export function LandingPageComponent() {
       </main>
 
       <footer className="py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-        <p>&copy; 2023 ChessMind AI. All rights reserved.</p>
+        <p>&copy; 2023 ChessMind AI by Pham Tran Khoi Nguyen. All rights reserved.</p>
       </footer>
     </div>
   )
