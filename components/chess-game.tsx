@@ -130,10 +130,10 @@ export function ChessGameComponent() {
                       </span>
                     )}
                     {rank === 1 && (
-                      <span className="absolute bottom-0 left-1 text-xs font-semibold opacity-50">{file}</span>
+                      <span className="absolute bottom-0 left-1 text-xs font-semibold text-gray-400">{file}</span>
                     )}
                     {file === 'a' && (
-                      <span className="absolute top-0 right-1 text-xs font-semibold opacity-50">{rank}</span>
+                      <span className="absolute top-0 right-1 text-xs font-semibold text-gray-400">{rank}</span>
                     )}
                   </div>
                 )
