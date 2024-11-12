@@ -12,10 +12,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  if (!process.env.NEXT_PUBLIC_HUGGING_FACE_TOKEN) {
-    console.error('Hugging Face token is not configured!');
-  }
-
   return (
     <html lang="en" className="dark">
       <body className="antialiased min-h-screen bg-gray-900 text-white">
