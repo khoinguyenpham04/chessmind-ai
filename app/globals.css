@@ -10,6 +10,17 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .bg-blur {
+    @apply bg-gray-950/20 backdrop-blur-md;
+  }
+  
+  .border-subtle {
+    @apply border border-white/5;
+  }
+  
+  .gradient-subtle {
+    @apply bg-gradient-to-b from-white/5 to-transparent;
+  }
 }
 
 @layer base {
@@ -80,4 +91,16 @@ body {
 @keyframes gradient {
   0% { background-position: 0% 0%; }
   100% { background-position: 200% 0%; }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.75;
+  }
 }
