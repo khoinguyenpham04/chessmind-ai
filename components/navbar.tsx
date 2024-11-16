@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { UserButton, SignInButton, SignUpButton, useAuth } from "@clerk/nextjs"
+import { UserButton, useAuth } from "@clerk/nextjs"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
