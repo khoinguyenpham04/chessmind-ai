@@ -26,7 +26,7 @@ export function LandingPageComponent() {
       <div 
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(circle at 50% 0%, rgba(0,255,170,0.1), transparent 60%)',
+          background: 'radial-gradient(circle at 70% 0%, rgba(0,255,170,0.1), transparent 65%)',
         }}
       ></div>
 
