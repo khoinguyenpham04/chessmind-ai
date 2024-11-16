@@ -10,17 +10,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  .bg-blur {
-    @apply bg-gray-950/20 backdrop-blur-md;
-  }
-  
-  .border-subtle {
-    @apply border border-white/5;
-  }
-  
-  .gradient-subtle {
-    @apply bg-gradient-to-b from-white/5 to-transparent;
-  }
 }
 
 @layer base {

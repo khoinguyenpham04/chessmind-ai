@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { UserButton, SignInButton, SignUpButton, useAuth } from "@clerk/nextjs"
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { isSignedIn } = useAuth()
 
   return (
     <>
@@ -25,12 +27,22 @@ export function Navbar() {
               <NavLink href="/practice">Practice</NavLink>
               <NavLink href="#contact">Contact</NavLink>
               <div className="flex items-center space-x-3">
-                <button className="px-4 py-1.5 rounded-full bg-gray-800 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
-                  Sign in
-                </button>
-                <button className="px-4 py-1.5 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
-                  Sign up
-                </button>
+                {isSignedIn ? (
+                  <UserButton afterSignOutUrl="/" />
+                ) : (
+                  <>
+                    <Link href="/sign-in">
+                      <button className="px-4 py-1.5 rounded-full bg-gray-800 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
+                        Sign in
+                      </button>
+                    </Link>
+                    <Link href="/sign-up">
+                      <button className="px-4 py-1.5 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
+                        Sign up
+                      </button>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
             <button 
@@ -51,12 +63,24 @@ export function Navbar() {
             <NavLink href="/practice" mobile>Practice</NavLink>
             <NavLink href="#contact" mobile>Contact</NavLink>
             <div className="flex flex-col space-y-2 pt-4">
-              <button className="w-full px-4 py-2 rounded-full bg-gray-800 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
-                Sign in
-              </button>
-              <button className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
-                Sign up
-              </button>
+              {isSignedIn ? (
+                <div className="flex justify-center">
+                  <UserButton afterSignOutUrl="/" />
+                </div>
+              ) : (
+                <>
+                  <Link href="/sign-in">
+                    <button className="w-full px-4 py-2 rounded-full bg-gray-800 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
+                      Sign in
+                    </button>
+                  </Link>
+                  <Link href="/sign-up">
+                    <button className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-green-400 to-blue-500 text-white text-sm font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)] transition-all">
+                      Sign up
+                    </button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

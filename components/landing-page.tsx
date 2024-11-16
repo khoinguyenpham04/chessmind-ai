@@ -3,8 +3,11 @@
 import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { Navbar } from './navbar'
+import { useRouter } from 'next/navigation'
 
 export function LandingPageComponent() {
+  const router = useRouter()
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white font-sans antialiased relative overflow-hidden">
       <div 
@@ -38,7 +41,10 @@ export function LandingPageComponent() {
               Elevate your game with personalized lessons, real-time analysis, and an AI opponent that adapts to your skill level.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <button className="px-8 py-3 rounded-full bg-gray-800 text-green-400 font-semibold shadow-[inset_0_2px_0_0_rgba(255,255,255,0.1),inset_0_-2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),inset_0_-3px_0_0_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
+              <button 
+                onClick={() => router.push('/practice')}
+                className="px-8 py-3 rounded-full bg-gray-800 text-green-400 font-semibold shadow-[inset_0_2px_0_0_rgba(255,255,255,0.1),inset_0_-2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),inset_0_-3px_0_0_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out transform hover:-translate-y-0.5"
+              >
                 Start Learning
               </button>
               <button className="px-8 py-3 rounded-full bg-gray-800 text-white font-semibold shadow-[inset_0_2px_0_0_rgba(255,255,255,0.1),inset_0_-2px_0_0_rgba(0,0,0,0.2)] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),inset_0_-3px_0_0_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out transform hover:-translate-y-0.5 flex items-center justify-center">
