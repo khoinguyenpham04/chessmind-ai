@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Play, Square } from "lucide-react";
+import { AudioLines, Square } from "lucide-react";
 
 interface AudioControlsProps {
   isPlaying: boolean;
@@ -28,7 +28,7 @@ export function AudioControls({ isPlaying, onPlay, onStop, disabled }: AudioCont
           onClick={onPlay}
           disabled={disabled}
         >
-          <Play className="h-4 w-4" />
+          <AudioLines className="h-4 w-4" />
           <span className="sr-only">Play</span>
         </Button>
       )}

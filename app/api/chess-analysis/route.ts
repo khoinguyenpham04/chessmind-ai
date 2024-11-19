@@ -40,7 +40,7 @@ Please provide a detailed but concise analysis using this format:
 - Mention common ideas or plans in similar positions
 - Suggest what both players should focus on next
 
-Keep the tone encouraging and educational, focusing on helping players understand the key concepts. Explain chess principles in clear, beginner-friendly terms.`;
+Keep the tone encouraging and educational, focusing on helping players understand the key concepts. Explain chess principles in clear, concise, beginner-friendly terms.`;
 
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',

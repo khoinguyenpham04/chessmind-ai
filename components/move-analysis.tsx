@@ -8,6 +8,8 @@ import ReactMarkdown from 'react-markdown';
 import { useTextToSpeech } from '@/hooks/use-text-to-speech';
 import { AudioControls } from '@/components/audio-controls';
 import { cleanAnalysisText } from '@/utils/text-helpers';
+import { Button } from './ui/button';
+import { BookOpen } from 'lucide-react';
 
 interface MoveAnalysisProps {
   move: string | null;
@@ -16,7 +18,6 @@ interface MoveAnalysisProps {
 }
 
 export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps) {
-  const [lastAnalyzedMove, setLastAnalyzedMove] = React.useState<string | null>(null);
   const [audioError, setAudioError] = React.useState<string | null>(null);
   const { isPlaying, playAudio, stopAudio } = useTextToSpeech();
   
@@ -27,8 +28,8 @@ export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps)
     },
   });
 
-  React.useEffect(() => {
-    if (move && move !== lastAnalyzedMove && position && moveHistory.length > 0) {
+  const handleAnalyzeMove = React.useCallback(() => {
+    if (move && position && moveHistory.length > 0) {
       const moveNumber = Math.ceil(moveHistory.length / 2);
       const color = moveHistory.length % 2 === 0 ? 'Black' : 'White';
       
@@ -41,10 +42,8 @@ export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps)
           moveHistory: moveHistory.join(' ')
         }
       });
-      
-      setLastAnalyzedMove(move);
     }
-  }, [move, position, moveHistory, complete, lastAnalyzedMove]);
+  }, [move, position, moveHistory, complete]);
 
   const handlePlayAnalysis = React.useCallback(() => {
     if (completion) {
@@ -58,19 +57,28 @@ export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps)
     }
   }, [completion, playAudio]);
 
-  
-
   return (
     <Card className="h-full">
       <CardContent className="p-4 h-full flex flex-col">
         <div className="flex justify-between items-center mb-2">
           <h3 className="text-xl font-semibold">Move Analysis</h3>
-          <AudioControls
-            isPlaying={isPlaying}
-            onPlay={handlePlayAnalysis}
-            onStop={stopAudio}
-            disabled={!completion || isLoading}
-          />
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleAnalyzeMove}
+              disabled={!move || isLoading}
+            >
+              <BookOpen className="h-4 w-4 mr-2" />
+              Analyze
+            </Button>
+            <AudioControls
+              isPlaying={isPlaying}
+              onPlay={handlePlayAnalysis}
+              onStop={stopAudio}
+              disabled={!completion || isLoading}
+            />
+          </div>
         </div>
         <ScrollArea className="flex-1 w-full rounded-md border p-4">
           {isLoading ? (
@@ -81,7 +89,7 @@ export function MoveAnalysis({ move, position, moveHistory }: MoveAnalysisProps)
           ) : (
             <>
               <ReactMarkdown className="leading-relaxed prose prose-neutral dark:prose-invert max-w-none">
-                {completion || 'Make a move to see analysis'}
+                {completion || 'Click Analyze to see move analysis'}
               </ReactMarkdown>
               {audioError && (
                 <p className="text-sm text-red-500 mt-2">
