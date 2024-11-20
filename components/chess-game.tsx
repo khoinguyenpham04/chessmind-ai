@@ -16,6 +16,8 @@ export function ChessGameComponent() {
   const [lastMove, setLastMove] = useState<string | null>(null)
   const chessboardContainerRef = useRef<HTMLDivElement>(null)
   const [boardWidth, setBoardWidth] = useState(400)
+  const [moveStack, setMoveStack] = useState<Chess[]>([new Chess()])
+  const [currentMoveIndex, setCurrentMoveIndex] = useState(0)
 
   useEffect(() => {
     updateGameStatus()
@@ -56,15 +58,21 @@ export function ChessGameComponent() {
       const move = game.move({
         from: sourceSquare,
         to: targetSquare,
-        promotion: 'q' // always promote to queen for simplicity
+        promotion: 'q'
       })
 
       if (move) {
+        const newGame = new Chess(game.fen())
         setMoveHistory([...moveHistory, move.san])
         setLastMove(move.san)
-        const newGame = new Chess(game.fen())
         setGame(newGame)
         setCurrentPosition(newGame.fen())
+        
+        // Update move stack
+        const newMoveStack = moveStack.slice(0, currentMoveIndex + 1)
+        newMoveStack.push(newGame)
+        setMoveStack(newMoveStack)
+        setCurrentMoveIndex(currentMoveIndex + 1)
         return true
       }
     } catch (error) {
@@ -74,11 +82,41 @@ export function ChessGameComponent() {
   }
 
   const resetGame = () => {
-    setGame(new Chess())
+    const newGame = new Chess()
+    setGame(newGame)
     setMoveHistory([])
     setMessage("White to move")
     setLastMove(null)
-    setCurrentPosition(new Chess().fen())
+    setCurrentPosition(newGame.fen())
+    setMoveStack([newGame])
+    setCurrentMoveIndex(0)
+  }
+
+  const canUndo = currentMoveIndex > 0
+  const canRedo = currentMoveIndex < moveStack.length - 1
+
+  const handleUndo = () => {
+    if (canUndo) {
+      const previousIndex = currentMoveIndex - 1
+      const previousGame = moveStack[previousIndex]
+      setGame(new Chess(previousGame.fen()))
+      setCurrentPosition(previousGame.fen())
+      setCurrentMoveIndex(previousIndex)
+      setMoveHistory(moveHistory.slice(0, -1))
+      setLastMove(moveHistory[moveHistory.length - 2] || null)
+    }
+  }
+
+  const handleRedo = () => {
+    if (canRedo) {
+      const nextIndex = currentMoveIndex + 1
+      const nextGame = moveStack[nextIndex]
+      setGame(new Chess(nextGame.fen()))
+      setCurrentPosition(nextGame.fen())
+      setCurrentMoveIndex(nextIndex)
+      setMoveHistory([...moveHistory, moveStack[nextIndex].history().pop() || ''])
+      setLastMove(moveStack[nextIndex].history().pop() || null)
+    }
   }
 
   return (
@@ -109,6 +147,24 @@ export function ChessGameComponent() {
           <CardContent className="p-4">
             <h2 className="text-xl font-bold mb-2">Game Status</h2>
             <p className="text-base mb-4">{message}</p>
+            <div className="flex gap-2 mb-4">
+              <Button 
+                onClick={handleUndo}
+                disabled={!canUndo}
+                variant="outline"
+                size="sm"
+              >
+                Undo
+              </Button>
+              <Button 
+                onClick={handleRedo}
+                disabled={!canRedo}
+                variant="outline"
+                size="sm"
+              >
+                Redo
+              </Button>
+            </div>
             <Button 
               onClick={resetGame} 
               className="relative w-full mb-4 bg-gray-800 shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)] overflow-hidden
