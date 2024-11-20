@@ -4,6 +4,7 @@ import { ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import { Navbar } from './navbar'
 import { useRouter } from 'next/navigation'
+import { Github, Star } from 'lucide-react'
 
 export function LandingPageComponent() {
   const router = useRouter()
@@ -55,25 +56,40 @@ export function LandingPageComponent() {
           </div>
 
           <div className="relative w-full max-w-5xl mx-auto">
-            <div className="relative aspect-[1.5] rounded-[2rem] border-[0.5rem] border-gray-800 bg-gray-800 p-2 shadow-2xl">
-              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-gray-900">
+            <div className="relative aspect-[1.5] rounded-[2rem] border-[0.5rem] border-gray-800 bg-gradient-to-b from-gray-700 to-gray-800 p-2 shadow-[0_0_15px_5px_rgba(0,0,0,0.3),inset_0_0_15px_5px_rgba(255,255,255,0.1)] transition-transform hover:scale-[1.02]">
+              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-gray-900 shadow-inner">
                 <Image
-                  src="/images/screenshot3.png?height=800&width=1300"
+                  src="/images/official.png?height=800&width=1300"
                   alt="ChessMind AI Interface"
                   className="object-cover"
                   fill
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-white/10"></div>
+                <div className="absolute inset-0 shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_2px_rgba(0,0,0,0.3)]"></div>
               </div>
-              <div className="absolute left-1/2 top-0 h-6 w-24 -translate-x-1/2 rounded-b-xl bg-gray-800"></div>
+              <div className="absolute left-1/2 top-0 h-6 w-24 -translate-x-1/2 rounded-b-xl bg-gradient-to-b from-gray-700 to-gray-800 shadow-[inset_0_-2px_3px_rgba(0,0,0,0.3)]"></div>
             </div>
             <div className="absolute -bottom-8 left-1/2 h-16 w-[90%] -translate-x-1/2 rounded-[2rem] bg-black/30 blur-2xl"></div>
           </div>
         </main>
 
-        <footer className="py-8 px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-          <p>&copy; 2023 ChessMind AI by Pham Tran Khoi Nguyen. All rights reserved.</p>
+        <footer className="bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col items-center justify-between space-y-4 sm:flex-row sm:space-y-0">
+            <p className="text-gray-400 text-sm">
+              &copy; {new Date().getFullYear()} ChessMind AI by Pham Tran Khoi Nguyen. All rights reserved.
+            </p>
+            <a
+              href="https://github.com/khoinguyenpham04/chessmind-ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              <Github className="h-5 w-5" />
+              <span className="text-sm">Star us on GitHub</span>
+              <Star className="h-4 w-4 fill-current" />
+            </a>
+          </div>
         </footer>
       </div>
     </div>

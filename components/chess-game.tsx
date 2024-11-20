@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Chess } from 'chess.js'
 import { Chessboard } from 'react-chessboard'
 import { Card, CardContent } from "@/components/ui/card"
@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { MoveAnalysis } from './move-analysis'
 import { Undo2, Redo2 } from 'lucide-react'
+import { useStockfish } from '@/hooks/use-stockfish';
 
 export function ChessGameComponent() {
   const [game, setGame] = useState(new Chess())
@@ -19,6 +20,15 @@ export function ChessGameComponent() {
   const [boardWidth, setBoardWidth] = useState(400)
   const [moveStack, setMoveStack] = useState<Chess[]>([new Chess()])
   const [currentMoveIndex, setCurrentMoveIndex] = useState(0)
+  const engine = useStockfish();
+  const [playingWithBot, setPlayingWithBot] = useState(false);
+  const [botLevel, setBotLevel] = useState(2);
+
+  const levels = {
+    "Easy 🤓": 2,
+    "Medium 🧐": 8,
+    "Hard 😵": 18
+  };
 
   useEffect(() => {
     updateGameStatus()
@@ -54,44 +64,72 @@ export function ChessGameComponent() {
     }
   }
 
+  const findBestMove = useCallback(() => {
+    if (!engine) return;
+    
+    engine.evaluatePosition(game.fen(), botLevel, (bestMove) => {
+      try {
+        const move = game.move({
+          from: bestMove.slice(0, 2),
+          to: bestMove.slice(2, 4),
+          promotion: bestMove.slice(4, 5) || 'q'
+        });
+
+        if (move) {
+          setMoveHistory([...moveHistory, move.san]);
+          setLastMove(move.san);
+          setGame(new Chess(game.fen()));
+          setCurrentPosition(game.fen());
+        }
+      } catch (error) {
+        console.error('Invalid bot move:', error);
+      }
+    });
+  }, [engine, game, botLevel, moveHistory]);
+
   function onDrop(sourceSquare: string, targetSquare: string) {
     try {
       const move = game.move({
         from: sourceSquare,
         to: targetSquare,
         promotion: 'q'
-      })
+      });
 
       if (move) {
-        const newGame = new Chess(game.fen())
-        setMoveHistory([...moveHistory, move.san])
-        setLastMove(move.san)
-        setGame(newGame)
-        setCurrentPosition(newGame.fen())
+        const newGame = new Chess(game.fen());
+        setMoveHistory([...moveHistory, move.san]);
+        setLastMove(move.san);
+        setGame(newGame);
+        setCurrentPosition(newGame.fen());
         
-        // Update move stack
-        const newMoveStack = moveStack.slice(0, currentMoveIndex + 1)
-        newMoveStack.push(newGame)
-        setMoveStack(newMoveStack)
-        setCurrentMoveIndex(currentMoveIndex + 1)
-        return true
+        const newMoveStack = moveStack.slice(0, currentMoveIndex + 1);
+        newMoveStack.push(newGame);
+        setMoveStack(newMoveStack);
+        setCurrentMoveIndex(currentMoveIndex + 1);
+
+        // Make bot move if playing with bot and game not over
+        if (playingWithBot && !newGame.isGameOver()) {
+          setTimeout(() => findBestMove(), 300);
+        }
+        
+        return true;
       }
     } catch (error) {
-      console.error("Invalid move:", error)
+      console.error("Invalid move:", error);
     }
-    return false
+    return false;
   }
 
   const resetGame = () => {
-    const newGame = new Chess()
-    setGame(newGame)
-    setMoveHistory([])
-    setMessage("White to move")
-    setLastMove(null)
-    setCurrentPosition(newGame.fen())
-    setMoveStack([newGame])
-    setCurrentMoveIndex(0)
-  }
+    const newGame = new Chess();
+    setGame(newGame);
+    setMoveHistory([]);
+    setMessage("White to move");
+    setLastMove(null);
+    setCurrentPosition(newGame.fen());
+    setMoveStack([newGame]);
+    setCurrentMoveIndex(0);
+  };
 
   const canUndo = currentMoveIndex > 0
   const canRedo = currentMoveIndex < moveStack.length - 1
@@ -119,6 +157,17 @@ export function ChessGameComponent() {
       setLastMove(moveStack[nextIndex].history().pop() || null)
     }
   }
+
+  useEffect(() => {
+    if (playingWithBot) {
+      try {
+        console.log('Initializing bot play');
+        // Any bot initialization code
+      } catch (error) {
+        console.error('Error initializing bot:', error);
+      }
+    }
+  }, [playingWithBot]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 w-full max-w-6xl mx-auto p-4">
@@ -181,6 +230,49 @@ export function ChessGameComponent() {
                 New Game
               </span>
             </button>
+            <div className="flex flex-col gap-4 mb-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Play vs Computer</h3>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setPlayingWithBot(!playingWithBot);
+                    resetGame();
+                  }}
+                >
+                  {playingWithBot ? 'Play vs Human' : 'Play vs Computer'}
+                </Button>
+              </div>
+              
+              {playingWithBot && (
+                <div className="flex flex-col items-center gap-4 my-4">
+                  <h3 className="text-lg font-semibold text-gray-200">Select Difficulty</h3>
+                  <div className="flex justify-center gap-4">
+                    {Object.entries(levels).map(([level, depth]) => (
+                      <Button
+                        key={level}
+                        variant={depth === botLevel ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setBotLevel(depth)}
+                        className={`
+                          px-6 py-3 rounded-xl font-medium transition-all duration-200
+                          ${depth === botLevel 
+                            ? "bg-gray-800 text-green-400 shadow-[inset_0px_-2px_4px_rgba(0,0,0,0.4),_inset_0px_2px_4px_rgba(255,255,255,0.1)]" 
+                            : "bg-gray-900 text-gray-300 hover:text-green-400 shadow-[6px_6px_12px_rgba(0,0,0,0.2),_-6px_-6px_12px_rgba(255,255,255,0.05)]"
+                          }
+                          hover:shadow-[inset_0px_-2px_4px_rgba(0,0,0,0.4),_inset_0px_2px_4px_rgba(255,255,255,0.1)]
+                          active:shadow-[inset_0px_-2px_4px_rgba(0,0,0,0.4),_inset_0px_2px_4px_rgba(255,255,255,0.1)]
+                          active:transform active:scale-95
+                        `}
+                      >
+                        {level}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             <h3 className="text-lg font-semibold mb-2">Move History</h3>
             <ScrollArea className="h-32 w-full rounded-md border p-2">
               <div className="grid grid-cols-2 gap-2 text-sm">
