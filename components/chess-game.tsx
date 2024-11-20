@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { MoveAnalysis } from './move-analysis'
+import { Undo2, Redo2 } from 'lucide-react'
 
 export function ChessGameComponent() {
   const [game, setGame] = useState(new Chess())
@@ -145,35 +146,41 @@ export function ChessGameComponent() {
       <div className="flex flex-col gap-4 lg:w-[40%]">
         <Card>
           <CardContent className="p-4">
-            <h2 className="text-xl font-bold mb-2">Game Status</h2>
-            <p className="text-base mb-4">{message}</p>
-            <div className="flex gap-2 mb-4">
-              <Button 
-                onClick={handleUndo}
-                disabled={!canUndo}
-                variant="outline"
-                size="sm"
-              >
-                Undo
-              </Button>
-              <Button 
-                onClick={handleRedo}
-                disabled={!canRedo}
-                variant="outline"
-                size="sm"
-              >
-                Redo
-              </Button>
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-xl font-bold">Game Status</h2>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={handleUndo}
+                  disabled={!canUndo}
+                  variant="outline"
+                  size="icon"
+                  className="w-8 h-8 p-0"
+                  aria-label="Undo move"
+                >
+                  <Undo2 className="h-4 w-4" />
+                </Button>
+                <Button 
+                  onClick={handleRedo}
+                  disabled={!canRedo}
+                  variant="outline"
+                  size="icon"
+                  className="w-8 h-8 p-0"
+                  aria-label="Redo move"
+                >
+                  <Redo2 className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <Button 
-              onClick={resetGame} 
-              className="relative w-full mb-4 bg-gray-800 shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)] overflow-hidden
-                before:absolute before:inset-[2px] before:z-[2] before:bg-gray-800 before:rounded-md
-                after:absolute after:inset-[-2px] after:animate-[gradient_5s_linear_infinite] after:bg-[length:200%] 
-                after:bg-gradient-to-r after:from-[#ff0000] after:via-[#00ff00,#0000ff,#ff0000] after:to-[#ff0000]"
+            <p className="text-base mb-4">{message}</p>
+            <button
+              onClick={resetGame}
+              className="relative inline-flex h-12 w-full overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mb-4"
             >
-              <span className="relative z-[2] text-gray-100 text-bold">New Game</span>
-            </Button>
+              <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-large text-white backdrop-blur-3xl">
+                New Game
+              </span>
+            </button>
             <h3 className="text-lg font-semibold mb-2">Move History</h3>
             <ScrollArea className="h-32 w-full rounded-md border p-2">
               <div className="grid grid-cols-2 gap-2 text-sm">
