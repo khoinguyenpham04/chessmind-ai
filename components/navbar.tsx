@@ -25,7 +25,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center space-x-8">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/practice">Practice</NavLink>
-              <NavLink href="#contact">Contact</NavLink>
+              <NavLink href="/contact">Contact</NavLink>
               <div className="flex items-center space-x-3">
                 {isSignedIn ? (
                   <UserButton afterSignOutUrl="/" />
@@ -61,7 +61,7 @@ export function Navbar() {
           <div className="relative bg-gradient-to-b from-white/5 to-transparent border-t border-white/5 py-4 px-4 space-y-4">
             <NavLink href="/" mobile>Home</NavLink>
             <NavLink href="/practice" mobile>Practice</NavLink>
-            <NavLink href="#contact" mobile>Contact</NavLink>
+            <NavLink href="/contact" mobile>Contact</NavLink>
             <div className="flex flex-col space-y-2 pt-4">
               {isSignedIn ? (
                 <div className="flex justify-center">
