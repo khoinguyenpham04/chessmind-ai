@@ -31,9 +31,9 @@ export function LandingPageComponent() {
         }}
       ></div>
 
+      <Navbar />
       <div className="relative z-10">
-        <Navbar />
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20"> {/* Added pt-32 for navbar spacing */}
           <div className="text-center mb-20">
             <h1 className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               Master Chess with AI

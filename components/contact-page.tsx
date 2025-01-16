@@ -4,17 +4,10 @@ import Image from "next/image"
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-[#0a192f] text-white relative overflow-hidden">
-      {/* Radial gradient background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(30,64,175,0.15)_0%,rgba(10,25,47,0.4)_100%)]"></div>
+    <div className="min-h-screen bg-[#111827] text-white relative overflow-hidden">
+     
 
-      {/* Grid background overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,0.3)_100%)]" 
-           style={{
-             backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)',
-             backgroundSize: '48px 48px'
-           }}>
-      </div>
+
 
       <div className="relative z-10 container mx-auto px-4 py-12 lg:py-24 max-w-7xl"> {/* Updated padding */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">

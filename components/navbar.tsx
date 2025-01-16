@@ -11,7 +11,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="py-6 px-4 sm:px-6 lg:px-8 flex justify-center relative z-50">
+      <header className="fixed top-0 left-0 right-0 py-6 px-4 sm:px-6 lg:px-8 flex justify-center z-50">
         <nav className="relative w-full max-w-4xl">
           <div className="absolute inset-0 bg-gray-950/20 backdrop-blur-md rounded-full"></div>
           <div className="absolute inset-0 rounded-full border border-white/5"></div>
@@ -56,8 +56,8 @@ export function Navbar() {
       </header>
 
       {isMenuOpen && (
-        <div className="md:hidden relative z-50">
-          <div className="absolute inset-0 bg-gray-950/20 backdrop-blur-md"></div>
+        <div className="md:hidden fixed top-[5.5rem] left-0 right-0 z-40">
+          <div className="absolute inset-0 bg-gray-950/20 "></div>
           <div className="relative bg-gradient-to-b from-white/5 to-transparent border-t border-white/5 py-4 px-4 space-y-4">
             <NavLink href="/" mobile>Home</NavLink>
             <NavLink href="/practice" mobile>Practice</NavLink>
@@ -106,4 +106,4 @@ function NavLink({ href, children, mobile = false }: { href: string, children: R
       {children}
     </Link>
   )
-} 
+}
