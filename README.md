@@ -4,7 +4,7 @@ ChessMind AI is a web application designed to help chess players of all levels i
 
 ## Live Demo
 
-[Link to live demo](https://chessmind.vercel.app)
+[Link to live demo](https://chessmindai.vercel.app)
 
 ## Key Features
 

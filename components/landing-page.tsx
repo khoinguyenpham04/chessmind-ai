@@ -15,12 +15,12 @@ export function LandingPageComponent() {
         className="absolute inset-0"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+            linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px',
+          backgroundSize: '80px 80px',
           backgroundPosition: 'center center',
-          mask: 'radial-gradient(circle at center, black 40%, transparent 100%)',
+          mask: 'radial-gradient(circle at center, black 20%, transparent 80%)',
         }}
       ></div>
 
@@ -35,10 +35,10 @@ export function LandingPageComponent() {
       <div className="relative z-10">
         <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20"> {/* Added pt-32 for navbar spacing */}
           <div className="text-center mb-20">
-            <h1 className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
-              Master Chess with AI
+            <h1 className="text-5xl sm:text-6xl font-semibold tracking-tight mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+              Your Personal AI Chess Coach
             </h1>
-            <p className="text-xl mb-10 text-gray-300">
+            <p className="text-xl mb-10 text-gray-400 max-w-2xl mx-auto">
               Elevate your game with personalized lessons, real-time analysis, and an AI opponent that adapts to your skill level.
             </p>
             <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
@@ -55,22 +55,27 @@ export function LandingPageComponent() {
             </div>
           </div>
 
-          <div className="relative w-full max-w-5xl mx-auto">
-            <div className="relative aspect-[1.5] rounded-[2rem] border-[0.5rem] border-gray-800 bg-gradient-to-b from-gray-700 to-gray-800 p-2 shadow-[0_0_15px_5px_rgba(0,0,0,0.3),inset_0_0_15px_5px_rgba(255,255,255,0.1)] transition-transform hover:scale-[1.02]">
-              <div className="relative h-full w-full overflow-hidden rounded-[1.5rem] bg-gray-900 shadow-inner">
-                <Image
-                  src="/images/official.png?height=800&width=1300"
-                  alt="ChessMind AI Interface"
-                  className="object-cover"
-                  fill
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-white/10"></div>
-                <div className="absolute inset-0 shadow-[inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_2px_rgba(0,0,0,0.3)]"></div>
+          <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+              <div
+                  aria-hidden
+                  className="bg-linear-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
+              />
+              <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                  <Image
+                      className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
+                      src="/images/official.png"
+                      alt="app screen"
+                      width={2700}
+                      height={1440}
+                  />
+                  <Image
+                      className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
+                      src="/images/official.png"
+                      alt="app screen"
+                      width={2700}
+                      height={1440}
+                  />
               </div>
-              <div className="absolute left-1/2 top-0 h-6 w-24 -translate-x-1/2 rounded-b-xl bg-gradient-to-b from-gray-700 to-gray-800 shadow-[inset_0_-2px_3px_rgba(0,0,0,0.3)]"></div>
-            </div>
-            <div className="absolute -bottom-8 left-1/2 h-16 w-[90%] -translate-x-1/2 rounded-[2rem] bg-black/30 blur-2xl"></div>
           </div>
         </main>
 
